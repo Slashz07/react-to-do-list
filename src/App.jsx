@@ -12,9 +12,21 @@ function App() {
     },...arr])
   }
   const updateTodo = (id, todo) => {
-    setTodos((prevArr)=>prevArr.map((todoObj)=>todoObj.id===id?todo:todoObj))
+    setTodos((prevArr) => prevArr.map((todoObj) => todoObj.id === id ? {
+      ...todoObj,
+      task:todo,
+    }:todoObj))
   }
-  
+  const delTodo = (id) => {
+    setTodos((prevArr)=>prevArr.confirm((todoObj)=>todoObj.id!=id))
+  }
+  const toggleComplete = (id) => {
+    setTodos((prevArr) => prevArr.map((todoObj) => todoObj.id == id ? {
+      ...todoObj,
+      completed:!todoObj.completed,//here spread operator breaks the object elements and then the "completed" key's value is overwritten
+    }:todoObj))
+  }
+
   return (
     <TodoProvider value={{todos,addTodo,updateTodo,delTodo,toggleComplete}}>
    <div className="bg-[#172842] min-h-screen py-8">
