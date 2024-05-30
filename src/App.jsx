@@ -1,13 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TodoProvider } from './contexts/ToDos.js'
 import './App.css'
 
 function App() {
-  const [todos,setTodos] = useState([])
+  const [todos, setTodos] = useState([])
+  
+  useEffect((todos) => {
+    const todoList = JSON.parse(localStorage.getItem("todos"))
+    if (todoList && todoList.length != 0) {
+      setTodos(todoList)
+    }
+  },[])
+  useEffect((todos) => {
+    localStorage.setItem("todos",JSON.stringify(todos))
+  },[todos])
+
   const addTodo = (todo) => {
     setTodos((arr) => [{
       id:arr.length+1,
-      task: { todo },
+      task: todo ,
       complete:false,
     },...arr])
   }
