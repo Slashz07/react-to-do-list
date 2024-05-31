@@ -4,15 +4,15 @@ import { GetContext } from "../contexts/ToDos";
 function Todoitems({ todo }) {
 
   const [isTodoEditable, setIsTodoEditable] = useState(false)
-  const [todoMsg, setTodoMsg] = useState()
+  const [todoMsg, setTodoMsg] = useState(todo.task)
   const {updateTodo,delTodo,toggleComplete}=GetContext()
 
   function togglePressed() {
     toggleComplete(todo.id)
-    setIsTodoEditable(false)
   }
   function changeTodo() {
-    updateTodo(todo.id,todoMsg)
+    updateTodo(todo.id, todoMsg)
+    setIsTodoEditable(false)
   }
   return (
     <div
